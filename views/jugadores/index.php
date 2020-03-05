@@ -44,9 +44,9 @@
 									<td><?=$value->fechaNac?></td>
 									<td><?=$value->draft?></td>
 									<td>
-										<a href="#" title="Visualizar"><i class="material-icons">visibility</i></a>
-										<a href="#" title="Editar"><i class="material-icons">edit</i></a>
-										<a href="#" title="Eliminar"><i class="material-icons">clear</i></a>
+										<a href="<?= URL ?>jugadores/show/<?=$value->id?>" title="Visualizar"><i class="material-icons">visibility</i></a>
+										<a href="<?= URL ?>jugadores/edit/<?=$value->id?>" title="Editar"><i class="material-icons">edit</i></a>
+										<a href="<?= URL ?>jugadores/delete/<?=$value->id?>"><i class="material-icons">clear</i></a>
 									</td>
 								</tr>
 							<?php endforeach;?>

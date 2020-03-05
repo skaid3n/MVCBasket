@@ -11,7 +11,6 @@
 
         function render() {
 
-
             $jugadores = $this->model->get();
             $this->view->datos = $jugadores;
             $this->view->cabecera = $this->model->cabeceraTabla();
@@ -107,7 +106,9 @@
         
         function edit($param){
             $this->view->id = $param[0];
-
+            $this->view->equipos = $this->model->getEquipos();
+            // var_dump($this->view->equipos);
+            // exit(0);
             $this->view->jugador = $this->model->getJugador($this->view->id);
             $this->view->jugador["id"] = $param[0];
 

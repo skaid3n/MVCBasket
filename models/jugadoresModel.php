@@ -35,6 +35,27 @@
 
     } 
 
+    public function getJugador($id){
+        try{ 
+            $sql = "SELECT * FROM jugadores WHERE id = :id LIMIT 1";
+            $pdo = $this->db->connect();
+            $stmt = $pdo->prepare($sql);
+            
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $stmt->execute();
+            
+            $jugadores = $stmt->fetch();
+        return $jugadores;
+        }
+            
+        catch (PDOException $e){
+        
+        exit($e->getMessage());
+        }
+
+    }
+
     public function getEquipos() {
         try{
             $consultaSQL = "SELECT * FROM equipo ORDER BY id";
@@ -45,7 +66,11 @@
             $pdoStmt->setFetchMode(PDO::FETCH_OBJ);
 
             $pdoStmt->execute();
-            return $pdoStmt;
+
+            $equipos = $pdoStmt->fetchAll();
+            // var_dump($equipos);
+            // exit(0);
+            return $equipos;
 
         }   catch(PDOException $e) {
     
