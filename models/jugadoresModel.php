@@ -148,5 +148,59 @@
 
         
     }
+
+    public function update($jugador) {
+        try {
+            $updateSQL ="UPDATE jugadores SET
+            nombre = :nombre,
+            apellidos = :apellidos,
+            equipo_id = :equipo_id,
+            nacionalidad = :nacionalidad,
+            fechaNac = :fechaNac,
+            draft = :draft
+            WHERE id = :id";
+
+            $pdo = $this->db->connect();
+            $stmt = $pdo->prepare($updateSQL);
+            
+            $stmt->bindParam(':id', $jugador['id'], PDO::PARAM_INT);
+			$stmt->bindParam(':nombre', $jugador['nombre'], PDO::PARAM_STR, 50);
+			$stmt->bindParam(':apellidos', $jugador['apellidos'], PDO::PARAM_STR, 50);
+			$stmt->bindParam(':equipo_id', $jugador['equipo_id']);
+			$stmt->bindParam(':nacionalidad', $jugador['nacionalidad'], PDO::PARAM_STR, 30);
+			$stmt->bindParam(':fechaNac', $jugador['fechaNac']);
+			$stmt->bindParam(':draft', $jugador['draft']);
+    
+            $stmt->execute();
+
+            return 'Registro actualizado Con Éxito';
+                
+        } catch (PDOException $e) {
+        
+            $error = 'Error al actualizar el registro: ' . $e->getMessage() . " en la línea: " . $e->getLine();
+            return $error;
+        }
+    }
+
+    public function delete($id) {
+        try {
+        
+            $deleteSQL ="DELETE FROM jugadores WHERE id = :id";
+
+            $pdo = $this->db->connect();
+            $pdoStmt = $pdo->prepare($deleteSQL);
+
+            $pdoStmt->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            $pdoStmt->execute();
+
+            return 'Registro borrado Con Éxito';
+                
+        } catch (PDOException $e) {
+        
+            $error = 'Error al borrar registro: ' . $e->getMessage() . " en la línea: " . $e->getLine();
+            return $error;
+        }
+    }
 }
 ?>  

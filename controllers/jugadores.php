@@ -117,6 +117,7 @@
 
         function show($param = null) {
             $this->view->id = $param[0];
+            $this->view->equipos = $this->model->getEquipos();
 
             $this->view->jugador = $this->model->getJugador($param[0]);
             $this->view->jugador["id"] = $param[0];
@@ -184,8 +185,7 @@
                
             } else {
 
-                # La función insert devuelve el mensaje resultante de añadir el registro
-                $mensaje=$this->model->insert($jugador);
+                $mensaje=$this->model->update($jugador);
                 
                 $this->view->mensaje = $mensaje;
                 $this->render();
@@ -195,6 +195,7 @@
 
         function delete($param) {
             $this->model->delete($param[0]);
+            $this->view->cabecera = $this->model->cabeceraTabla();
             
             $jugadores = $this->model->get();
             $this->view->datos = $jugadores;
