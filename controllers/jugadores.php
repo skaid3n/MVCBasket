@@ -1,5 +1,6 @@
-<?php
-
+<?php   
+    	require_once('fpdf/fpdf.php');
+        require_once('class/mi_pdf.php');
     class Jugadores Extends Controller {
 
         function __construct() {
@@ -10,7 +11,7 @@
         }
 
         function render() {
-
+            session_start();
             $jugadores = $this->model->get();
             $this->view->datos = $jugadores;
             $this->view->cabecera = $this->model->cabeceraTabla();
@@ -22,7 +23,7 @@
         #Metodos relacionados con el CRUD jugadores.
         
         function create(){
-            
+            session_start();
             $this->view->equipos = $this->model->getEquipos();
 
             if(!isset($this->view->jugador)) $this->view->jugador = null;
@@ -105,6 +106,7 @@
         }
         
         function edit($param){
+            session_start();
             $this->view->id = $param[0];
             $this->view->equipos = $this->model->getEquipos();
             // var_dump($this->view->equipos);
@@ -116,6 +118,7 @@
         }
 
         function show($param = null) {
+            session_start();
             $this->view->id = $param[0];
             $this->view->equipos = $this->model->getEquipos();
 
@@ -194,6 +197,7 @@
         }
 
         function delete($param) {
+            session_start();
             $this->model->delete($param[0]);
             $this->view->cabecera = $this->model->cabeceraTabla();
             
@@ -211,6 +215,45 @@
         function ordenar(){
             echo "controlador asociado al metodo ORDENAR";
             exit(0);
+        }
+
+        public function imprimir_pdf(){
+            $pdf = new mi_pdf();
+            $pdf->Addpage();
+            $pdf->SetFont('Arial', '', 8);
+    
+            $pdf-> Cabecera_archivos();
+    
+            $archivos = $this->model->get();
+            // var_dump($archivos);
+            // exit(0);
+            $total_capacidad = 0;
+    
+            foreach( $archivos as $i => $archivo){
+    
+                $pdf->Cell(5,8,utf8_decode($archivo->id),0,0);
+    
+                $pdf->Cell(30,8,utf8_decode($archivo->nombre),0,0);
+    
+                $pdf->Cell(20,8,utf8_decode($archivo->apellidos),0,0);
+    
+                $pdf->Cell(40,8,utf8_decode($archivo->nombreEquipo),0,0);
+
+                $pdf->Cell(30,8,utf8_decode($archivo->nacionalidad),0,0);
+
+                $pdf->Cell(25,8,utf8_decode($archivo->fechaNac),0,0);
+
+                $pdf->Cell(30,8,utf8_decode($archivo->draft),0,1);
+
+            }
+    
+            $pdf->Cell(45,10,utf8_decode('Numero de elementos: '), 'T', 0);
+            $pdf->Cell(45,10,utf8_decode($i+1), 'T', 0);
+            $pdf->Cell(90,10,utf8_decode(""), 'T', 0);
+    
+            $pdf->Output('I', 'jugadores.pdf');
+            
+            
         }
         
 

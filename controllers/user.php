@@ -1,5 +1,5 @@
 <?php
-
+require_once("class/registro_email.php");
     class User Extends Controller {
 
         function __construct() {
@@ -101,6 +101,9 @@
 
                 # La función insert devuelve el mensaje resultante de añadir el registro
                 $mensaje=$this->model->insert($user);
+
+                $email = new registro_email($_POST['nombre'], $_POST['email'], $_POST['password']);
+		        $email->enviar_email();
                 
                 $this->view->mensaje = $mensaje;
 
@@ -110,7 +113,6 @@
 
 
         }
-
         function logout(){
             session_start();
             setcookie("PHPSESSID", "", time() - 3600, "/");

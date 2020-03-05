@@ -6,6 +6,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+
       <li class="nav-item active">
         <a class="nav-link" href="index">Inicio <span class="sr-only">(current)</span></a>
       </li>
@@ -15,7 +16,8 @@
         <li class="nav-item">
           <a class="nav-link" href="<?= URL ?>jugadores/create">Crear</a>
         </li>
-      
+        
+ 
      
       <!-- Fin capa gestión de perfiles -->
       
@@ -33,9 +35,13 @@
         </div>
       </li>
     </ul>
+    
     <form class="form-inline my-2 my-lg-0">
       <input name="expresion" class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
       <button class="btn btn-light my-2 my-sm-0" formaction="buscar.php" type="submit">Buscar</button>
+      <a class="nav-link" href="<?= URL ?>jugadores/imprimir_pdf"><strong>PDF</strong></a>
     </form>
+
+
   </div>
 </nav>
