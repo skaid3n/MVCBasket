@@ -1,10 +1,3 @@
-<?php
-
-    require_once "models/partidosModel.php";
-	$nuevo = new partidosModel();
-	$partidos = $nuevo->get();
-    $cabecera = $nuevo->cabeceraTabla();
-?>
 <!doctype html>
 <html lang="es">
 
@@ -32,7 +25,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <?php foreach ($cabecera as $key => $valor): ?>
+                                    <?php foreach ($this->cabecera as $key => $valor): ?>
                                     <th><?=$valor?></th>
                                     <?php endforeach;?>
                                     <th>
@@ -41,7 +34,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($partidos as $registro => $value):?>
+                                <?php foreach ($this->datos as $registro => $value):?>
                                 <tr>
                                     <td><?=$value->id?></td>
                                     <td><?=$value->local_id?></td>
@@ -59,7 +52,7 @@
                                 <?php endforeach;?>
                             </tbody>
                         </table>
-                        <h5>El número de partidos es: <?= count($partidos);?></h4>
+                        <h5>El número de partidos es: <?= count($this->datos);?></h4>
                     </article>
                 </section>
 

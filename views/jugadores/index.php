@@ -35,21 +35,36 @@
 				<?php require_once("template/jugadores/menubar.php") ?>
                     <!-- Muestra contenido de la tabla -->
                     <?php foreach ($this->datos as $registro => $value):?>
-								<tr>
-									<td><?=$value->id?></td>
-									<td><?=$value->nombre?></td>
-									<td><?=$value->apellidos?></td>
-									<td><?=$value->nombreEquipo?></td>
-									<td><?=$value->nacionalidad?></td>
-									<td><?=$value->fechaNac?></td>
-									<td><?=$value->draft?></td>
-									<td>
-										<a href="<?= URL ?>jugadores/show/<?=$value->id?>" title="Visualizar"><i class="material-icons">visibility</i></a>
-										<a href="<?= URL ?>jugadores/edit/<?=$value->id?>" title="Editar"><i class="material-icons">edit</i></a>
-										<a href="<?= URL ?>jugadores/delete/<?=$value->id?>"><i class="material-icons">clear</i></a>
-									</td>
-								</tr>
-							<?php endforeach;?>
+							<tr>
+								<td><?=$value->id?></td>
+								<td><?=$value->nombre?></td>
+								<td><?=$value->apellidos?></td>
+								<td><?=$value->nombreEquipo?></td>
+								<td><?=$value->nacionalidad?></td>
+								<td><?=$value->fechaNac?></td>
+								<td><?=$value->draft?></td>
+								<?php if (isset($_SESSION['id'])): ?>
+									<?php if ($_SESSION['rol_name'] == "Administrador"): ?>
+										<td>
+											<a href="<?= URL ?>jugadores/show/<?=$value->id?>" title="Visualizar"><i class="material-icons">visibility</i></a>
+											<a href="<?= URL ?>jugadores/edit/<?=$value->id?>" title="Editar"><i class="material-icons">edit</i></a>
+											<a href="<?= URL ?>jugadores/delete/<?=$value->id?>"><i class="material-icons">clear</i></a>
+										</td>
+									<?php endif ?>
+									<?php if ($_SESSION['rol_name'] == "Editor"): ?>
+										<td>
+											<a href="<?= URL ?>jugadores/show/<?=$value->id?>" title="Visualizar"><i class="material-icons">visibility</i></a>
+											<a href="<?= URL ?>jugadores/edit/<?=$value->id?>" title="Editar"><i class="material-icons">edit</i></a>
+										</td>
+									<?php endif ?>
+									<?php if ($_SESSION['rol_name'] == "Registrado"): ?>
+										<td>
+											<a href="<?= URL ?>jugadores/show/<?=$value->id?>" title="Visualizar"><i class="material-icons">visibility</i></a>
+										</td>
+									<?php endif ?>
+								<?php endif ?>
+							</tr>
+						<?php endforeach;?>
                 </tbody>
             </table>
 			<h4>El número de jugadores es: <?= Count($this->datos)?></h4>

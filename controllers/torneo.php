@@ -10,6 +10,11 @@
 
         function render() {
             session_start();
+            
+            $torneo = $this->model->get();
+            $this->view->datos = $torneo;
+            $this->view->cabecera = $this->model->cabeceraTabla();
+
             $this->view->render('torneo/index');
         }
     }

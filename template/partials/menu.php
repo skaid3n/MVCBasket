@@ -57,14 +57,19 @@
         <?php if (!empty($_SESSION['id'])): ?>
 
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <?= $_SESSION['name'] ?>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="editar_perfil.php">Editar Perfil</a>
-          <a class="dropdown-item" href="editar_password">Cambiar Contraseña</a>
-          <a class="dropdown-item" href="<?= URL ?>user/logout">Logout</a>          
-        </div>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <?= $_SESSION['name'] ?>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="<?= URL ?>user/editaruser">Editar Perfil</a>
+            <a class="dropdown-item" href="<?= URL ?>user/changepass">Cambiar Contraseña</a>
+            <a class="dropdown-item" href="<?= URL ?>user/deleteperfil">Eliminar perfil</a>
+            <a class="dropdown-item" href="<?= URL ?>user/logout">Logout</a>
+            <div class="dropdown-divider"></div>
+            <a disabled class="dropdown-item"><?= $_SESSION['rol_name'] ?></a>
+
+          </div>
         <?php endif ?>
         
       </ul>

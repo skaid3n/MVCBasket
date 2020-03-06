@@ -78,20 +78,6 @@
 
         }
     }
-    
-    public function cabeceraTabla() {
-        $cabecera = [
-            "Id",
-            "Nombre",
-            "Apellido",
-            "Equipo",
-            "Nacionalidad",
-            "Fecha Nacimiento",
-            "Draft"
-        ];
-
-        return $cabecera;
-    }  
 
     public function getPabellon(){
         try{
@@ -202,5 +188,65 @@
             return $error;
         }
     }
+
+    public function ordenar($param){
+        $campo = $param[0];
+        try {
+            $consultaSQL = "SELECT * FROM jugadores ORDER BY $campo ASC";
+            
+            $pdo = $this->db->connect();
+            $pdoStmt = $pdo->prepare($consultaSQL);
+            
+            $pdoStmt->setFetchMode(PDO::FETCH_OBJ);
+            
+            $pdoStmt->execute();
+            
+            $jugadores = $pdoStmt->fetchAll();
+            
+            return $jugadores;
+        } catch (PDOException $e) {
+            $error = "Error al leer registros: " . $e->getMessage() .  " en la línea " . $e->getLine();
+        }
+    }
+
+    public function buscar($param){
+        $campo = $param;
+        try {
+            $consultaSQL = "SELECT * FROM jugadores
+            WHERE nombre LIKE '%$campo%' OR
+            apellido LIKE '%$campo%' OR
+            equipo_id LIKE '%$campo%' OR
+            nacionalidad LIKE '%$campo%' OR
+            fechaNac LIKE '%$campo%' OR
+            draft LIKE '%$campo%'";
+
+            $pdo = $this->db->connect();
+            $pdoStmt = $pdo->prepare($consultaSQL);
+
+            $pdoStmt->setFetchMode(PDO::FETCH_OBJ);
+
+            $pdoStmt->execute();
+
+            $jugadores = $pdoStmt->fetchAll();
+
+            return $jugadores;
+        } catch (PDOException $e) {
+            $error = "Error al leer registros: " . $e->getMessage() .  " en la línea " . $e->getLine();
+        }
+    }
+
+    public function cabeceraTabla() {
+        $cabecera = [
+            "Id",
+            "Nombre",
+            "Apellido",
+            "Equipo",
+            "Nacionalidad",
+            "Fecha Nacimiento",
+            "Draft"
+        ];
+
+        return $cabecera;
+    }  
 }
 ?>  

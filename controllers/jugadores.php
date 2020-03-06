@@ -208,13 +208,28 @@
         }
 
 
-        function buscar(){
-            echo "controlador asociado al metodo BUSCAR";
-            exit(0);
+        public function buscar($param = null){
+            if (!isset($_SESSION)){
+                session_start();
+            }
+            $param = $_GET['expresion'];
+            $jugadores = $this->model->buscar($param);
+            $this->view->cabecera = $this->model->cabeceraTabla();
+            $this->view->datos = $jugadores;
+            
+            $this->view->render('jugadores/index');
         }
-        function ordenar(){
-            echo "controlador asociado al metodo ORDENAR";
-            exit(0);
+
+        public function ordenar($param = null){
+            if (!isset($_SESSION)){
+                session_start();
+            }
+            $jugadores = $this->model->ordenar($param);
+
+            $this->view->cabecera = $this->model->cabeceraTabla();
+            $this->view->datos = $jugadores;
+            
+            $this->view->render('jugadores/index');
         }
 
         public function imprimir_pdf(){
